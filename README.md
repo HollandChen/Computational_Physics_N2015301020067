@@ -1,7 +1,8 @@
 # Computational_Physics_N2015301020067
 ## Homework list
-- [ ] Exercise_03: All levels
-- [ ] Exercise_04: Chapter 1 problem 1.5: The decay od two kinds of particles
+- [x] Exercise_02: Print name
+- [x] Exercise_03: All levels
+- [x] Exercise_04: Chapter 1 problem 1.5: The decay od two kinds of particles
 - [x] Exercise_05: Chapter 1 problem 1.6: Population growth
 - [x] Exercise_06: Chapter 2 problem 2.9 & 2.10: The cannon
 - [x] Exercise_07: Chapter 2 problem 2.19: The spin of baseball and visual motion of baseball
