@@ -1,6 +1,6 @@
 # Computational_Physics_N2015301020067
 ## Homework list
-- [x] Exercise_02: Print name (https://github.com/HollandChen/Computational_Physics_N2015301020067/blob/master/print%20name)
+- [x] [Exercise_02: Print name](https://github.com/HollandChen/Computational_Physics_N2015301020067/blob/master/print%20name)
 - [x] Exercise_03: All levels
 - [x] Exercise_04: Chapter 1 problem 1.5: The decay od two kinds of particles
 - [x] Exercise_05: Chapter 1 problem 1.6: Population growth
