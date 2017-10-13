@@ -1,0 +1,123 @@
+from math import cos,sin,sqrt,pi
+import matplotlib.pyplot as plt
+
+
+x=0
+y=0
+v0=700
+theta=(45*pi/180)
+vx=v0*cos(theta)
+vy=v0*sin(theta)
+i=0.1
+a=6.5*10**(-3)
+alpha=2.5
+T0=300
+g=9.8
+x_position1=[]
+y_position1=[]
+k=4*10**(-5)
+
+
+#no wind
+while y>=0:
+    x_position1.append(x/1000)
+    y_position1.append(y/1000)
+    v=sqrt(vx**2+vy**2)
+    x=x+vx*i
+    y=y+vy*i
+    vx=vx-k*(1-a*y/T0)**alpha*v*vx*i
+    vy=vy-(g+k*(1-a*y/T0)**alpha*v*vy)*i
+r=-y_position1[-1]*1000/y
+xl=(x_position1[-1]+r*x/1000)/(r+1)
+yl=0
+x_position1.append(xl)
+y_position1.append(yl)
+
+
+
+#v0 increas 1%
+x=0
+y=0
+v0=707
+theta=(45*pi/180)
+vx=v0*cos(theta)
+vy=v0*sin(theta)
+x_position2=[]
+y_position2=[]
+while y>=0:
+    x_position2.append(x/1000)
+    y_position2.append(y/1000)
+    v=sqrt(vx**2+vy**2)
+    x=x+vx*i
+    y=y+vy*i
+    vx=vx-k*(1-a*y/T0)**alpha*v*vx*i
+    vy=vy-(g+k*(1-a*y/T0)**alpha*v*vy)*i
+r=-y_position2[-1]*1000/y
+xl=(x_position2[-1]+r*x/1000)/(r+1)
+yl=0
+x_position2.append(xl)
+y_position2.append(yl)
+
+
+#with a slight (10km/h) headwind
+v_wind=10/3.6
+x=0
+y=0
+v0=700
+theta=(45*pi/180)
+vx=v0*cos(theta)
+vy=v0*sin(theta)
+x_position3=[]
+y_position3=[]
+while y>=0:
+    x_position3.append(x/1000)
+    y_position3.append(y/1000)
+    v=sqrt(vx**2+vy**2)
+    x=x+vx*i
+    y=y+vy*i
+    vx=vx-k*(1-a*y/T0)**alpha*sqrt((vx+v_wind)**2+vy**2)*(vx+v_wind)*i
+    vy=vy-(g+k*(1-a*y/T0)**alpha*v*vy)*i
+r=-y_position3[-1]*1000/y
+xl=(x_position3[-1]+r*x/1000)/(r+1)
+yl=0
+x_position3.append(xl)
+y_position3.append(yl)
+
+
+
+#with a slight(10km/h) tailwind
+x=0
+y=0
+v0=700
+theta=(45*pi/180)
+vx=v0*cos(theta)
+vy=v0*sin(theta)
+x_position4=[]
+y_position4=[]
+while y>=0:
+    x_position4.append(x/1000)
+    y_position4.append(y/1000)
+    v=sqrt(vx**2+vy**2)
+    x=x+vx*i
+    y=y+vy*i
+    vx=vx-k*(1-a*y/T0)**alpha*sqrt((vx-v_wind)**2+vy**2)*(vx-v_wind)*i
+    vy=vy-(g+k*(1-a*y/T0)**alpha*v*vy)*i
+r=-y_position4[-1]*1000/y
+xl=(x_position4[-1]+r*x/1000)/(r+1)
+yl=0
+x_position4.append(xl)
+y_position4.append(yl)
+def plot_01():
+    plt.title("Trajectory of cannon shell")
+    plt.xlabel("x (km)")
+    plt.ylabel("y (km)")
+    plt.plot(x_position1,y_position1,"k--",label="no wind")
+    plt.plot(x_position2,y_position2,"k-",label="v0 increas 1%")
+    plt.plot(x_position3,y_position3,"b--",label="headwind")
+    plt.plot(x_position4,y_position4,"b-",label="tailwind")
+    plt.xlim(0.0,30.0)
+    plt.ylim(0.0,10.0)
+    plt.legend()
+    plt.show
+plot_01()
+print(x_position1[-1],x_position2[-1],x_position3[-1],x_position4[-1])
