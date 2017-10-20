@@ -1,0 +1,64 @@
+from math import cos,sin,pi,exp,sqrt
+import matplotlib.pyplot as plt
+
+
+angle=10*pi/180  #投掷角度
+vd=35
+Delta=5
+g=9.8
+dt=0.01
+x_position=[]
+z_position=[]
+def B_m(v):#粘滞系数
+    c=0.0039 + 0.0058/(1+exp((v-vd)/Delta))
+    return c
+def tra(w=0.2,o=0,v=29.0576):#轨迹函数
+    vx=v*cos(angle)
+    vy=v*sin(angle)
+    w*=(2*pi)
+    o*=(pi/180)
+    vz=0
+    x=0
+    z=0
+    x_position=[]
+    z_position=[]
+    while x<=18.288:
+        x_position.append(x)
+        z_position.append(z)
+        x=x+vx*dt    #欧拉法
+        z=z+vz*dt
+        o=o+w*dt
+        v=sqrt(vx**2+vy**2+vz**2)
+        vz=vz-g*(0.5*(sin(4*o)-0.25*sin(8*o)+0.08*sin(12*o)-0.025*sin(16*o)))*dt
+        vx=vx-B_m(v)*v*vx*dt
+        vy=vy-g*dt
+    return [x_position,z_position]
+
+plt.figure(1)#初始设定数值的轨迹
+plt.title("trajectories of knuckleballs for w=0,orientation=0,velocity=29.0576")
+plt.xlabel("x/m")
+plt.ylabel("z/m")
+plt.plot(tra()[0],tra()[1],"k-")
+
+plt.figure(2)#保持角速度和初速度不变，初始角度从0到360的轨迹
+plt.title("for orientation from 0 to 360")
+plt.xlabel("x/m")
+plt.ylabel("z/m")
+for i in range(0,360):
+    plt.plot(tra(o=i)[0],tra(o=i)[1],"k-")
+
+plt.figure(3)#保持角速度和初始角度不变,初速度从20m/s到40m/s的轨迹
+plt.title("for velocity from 20m/s to 40m/s")
+plt.xlabel("x/m")
+plt.ylabel("z/m")
+for i in range(20,40):
+    plt.plot(tra(v=i)[0],tra(v=i)[1],"k-")
+    
+plt.figure(4)#保持初始角度和初始角速度不变，角速度从0.0rad/s到3.0rad/s
+plt.title("for angular velocity from 0.0rad/s to 3.0rad/s")
+plt.xlabel("x/m")
+plt.ylabel("z/m")
+for i in range(1,30):
+    i=0.1*i
+    plt.plot(tra(w=i)[0],tra(w=i)[1],"k-")
+plt.show()
