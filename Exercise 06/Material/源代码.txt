@@ -35,7 +35,7 @@ def tra(w=0.2,o=0,v=29.0576):#轨迹函数
     return [x_position,z_position]
 
 plt.figure(1)#初始设定数值的轨迹
-plt.title("trajectories of knuckleballs for w=0,orientation=0,velocity=29.0576")
+plt.title("trajectories of knuckleballs for w=0.4pi,orientation=0,velocity=29.0576")
 plt.xlabel("x/m")
 plt.ylabel("z/m")
 plt.plot(tra()[0],tra()[1],"k-")
@@ -54,8 +54,8 @@ plt.ylabel("z/m")
 for i in range(20,40):
     plt.plot(tra(v=i)[0],tra(v=i)[1],"k-")
     
-plt.figure(4)#保持初始角度和初始角速度不变，角速度从0.0rad/s到3.0rad/s
-plt.title("for angular velocity from 0.0rad/s to 3.0rad/s")
+plt.figure(4)#保持初始角度和初始角速度不变，角速度从0.0rad/s到6pi rad/s
+plt.title("for angular velocity from 0.0rad/s to 6pi rad/s")
 plt.xlabel("x/m")
 plt.ylabel("z/m")
 for i in range(1,30):
