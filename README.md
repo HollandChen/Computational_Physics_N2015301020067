@@ -6,4 +6,4 @@
 - [x] [Exercise 05: chapter 2 problem 2.11](https://github.com/HollandChen/Computational_Physics_N2015301020067/tree/master/Exercise%2005)
 - [x] [Exercise 06: chapter 2 problem 2.17](https://github.com/HollandChen/Computational_Physics_N2015301020067/tree/master/Exercise%2006)
 - [x] [Exercise 07: chapter 3 problem 3.13](https://github.com/HollandChen/Computational_Physics_N2015301020067/blob/master/Exercise%2007/%E6%8A%A5%E5%91%8A.md)
-- [x] [Exercise 08: chapter 3 problem 3.18](https://github.com/HollandChen/Computational_Physics_N2015301020067/blob/master/Exercise%2008/%E6%8A%A5%E5%91%8A.md)
+- [x] [Exercise 08: chapter 3 problem 3.18](https://www.zybuluo.com/Hollandchen/note/929354)
