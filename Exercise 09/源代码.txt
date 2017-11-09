@@ -1,0 +1,40 @@
+from math import sin,pi,sqrt
+import matplotlib.pyplot as plt
+
+vx=0.2
+vy=0.5
+x=0.2
+y=0.2
+dt=0.01
+t=0
+x_list=[]
+y_list=[]
+while t<6:
+    if sqrt(x*x+y*y)<1 :
+        x_list.append(x)
+        y_list.append(y)
+        x=x+vx*dt
+        y=y+vy*dt
+        t=t+dt
+    else :
+        x=x-vx*dt
+        y=y-vy*dt
+        t=t-dt
+        dt_small=dt/100
+        while sqrt(x*x+y*y)<1 :
+            x=x+vx*dt_small
+            y=y+vy*dt_small
+            t=t+dt_small
+            x_list.append(x)
+            y_list.append(y)
+        vx=vx-(x*vx+y*vy)*2*x/(x*x+y*y)
+        vy=vy-(x*vx+y*vy)*2*y/(x*x+y*y)
+        x=x+vx*dt
+        y=y+vy*dt
+        t=t+dt
+plt.figure(1)
+plt.xlim(-1.0,1.0)
+plt.ylim(-1.0,1.0)
+plt.plot(x_list,y_list,"k")
+plt.show()
+        
