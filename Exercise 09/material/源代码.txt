@@ -1,18 +1,23 @@
+
+
 from math import sin,pi,sqrt
 import matplotlib.pyplot as plt
 
+#·½ÐÎÇ½±Ú¼ÓÄÚ²¿Ô²Ç½±Ú
 vx=0.2
-vy=0.5
-x=0.2
-y=0.2
+vy=0.2
+x=0
+y=0.51
 dt=0.01
 t=0
 x_list=[]
 y_list=[]
-while t<6:
-    if sqrt(x*x+y*y)<1 :
+
+while t<300:
+    if -1<=x<=1 and -1<=y<=1 and sqrt(x*x+y*y)>0.5 :
         x_list.append(x)
         y_list.append(y)
+        
         x=x+vx*dt
         y=y+vy*dt
         t=t+dt
@@ -21,20 +26,81 @@ while t<6:
         y=y-vy*dt
         t=t-dt
         dt_small=dt/100
-        while sqrt(x*x+y*y)<1 :
+        while -1<=x<=1 and -1<=y<=1 and sqrt(x*x+y*y)>0.5 :
+            vx_list=[]
             x=x+vx*dt_small
             y=y+vy*dt_small
             t=t+dt_small
             x_list.append(x)
             y_list.append(y)
-        vx=vx-(x*vx+y*vy)*2*x/(x*x+y*y)
-        vy=vy-(x*vx+y*vy)*2*y/(x*x+y*y)
+            vx_list.append(vx)
+        if sqrt(x*x+y*y)<0.5:
+            vx=vx-(x*vx+y*vy)*2*x/(x*x+y*y)
+            vy=vy-(x*vx_list[0]+y*vy)*2*y/(x*x+y*y)
+        if x>1 or x<-1 :
+            vx=-vx
+        if y>=1 or y<=-1 :
+            vy=-vy
         x=x+vx*dt
         y=y+vy*dt
         t=t+dt
+        
+            
 plt.figure(1)
-plt.xlim(-1.0,1.0)
+plt.xlim(-2.0,2.0)
 plt.ylim(-1.0,1.0)
-plt.plot(x_list,y_list,"k")
+plt.plot(x_list,y_list)
 plt.show()
+        
+        
+# ÍÖÔ²Ç½±Ú       
+a=2
+b=1
+vx=3
+vy=2
+x=-1.5
+y=0
+dt=0.001
+t=0
+x_list=[]
+y_list=[]
+
+while t<100:
+    if ((x*x)/(a*a)+(y*y)/(b*b))<1 :
+        x_list.append(x)
+        y_list.append(y)
+        
+        x=x+vx*dt
+        y=y+vy*dt
+        t=t+dt
+    else :
+        x=x-vx*dt
+        y=y-vy*dt
+        t=t-dt
+        dt_small=dt/100
+        while ((x*x)/(a*a)+(y*y)/(b*b))<1 :
+            vx_list=[]
+            x=x+vx*dt_small
+            y=y+vy*dt_small
+            t=t+dt_small
+            x_list.append(x)
+            y_list.append(y)
+            vx_list.append(vx)
+            
+           
+        vx=(4*y*vx-x*vy)*8*y/(16*y*y+x*x)-vx
+        vy=-(4*y*vx_list[0]-x*vy)*2*x/(16*y*y+x*x)-vy
+        while ((x*x)/(a*a)+(y*y)/(b*b))>1 :
+            x=x+vx*dt
+            y=y+vy*dt
+            t=t+dt
+            x_list.append(x)
+            y_list.append(y)
+            
+plt.figure(2)
+plt.xlim(-2.0,2.0)
+plt.ylim(-1.0,1.0)
+plt.plot(x_list,y_list)
+plt.show()
+                
         
