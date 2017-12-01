@@ -1,0 +1,163 @@
+from math import sin,pi,sqrt,atan
+import matplotlib.pyplot as plt
+
+alpha=0.01
+a=0.39
+e=0.206
+x=0.47
+y=0
+r=0
+vx=0
+vy=sqrt((4*pi*pi*(1-e))/(a*(1+e)))
+x_list=[]
+y_list=[]
+t_list=[]
+theta=0
+theta_list=[]
+r_list=[0,0]
+alpha_list=[]
+k_list=[]
+t=0
+dt=0.0001
+plt.figure(1)
+
+while t<2.75:
+    x_list.append(x)
+    y_list.append(y)
+    r_list.append(r)
+    r=sqrt(x**2+y**2)
+    """选取远日点"""
+    if r_list[-2]>r_list[-3] and r_list[-2]>r_list[-1]:
+        plt.plot([0,x_list[-1]],[0,y_list[-1]],"k")
+        theta=atan(y/x)
+        if x<0 and y>0:
+            theta=theta+pi
+        if x<0 and y<0:
+            theta=theta+pi
+        if x>0 and y<0:
+            theta=theta+2*pi
+        theta=theta*180/pi
+        theta_list.append(theta)
+        t_list.append(t)
+        
+    vx=vx-(4*pi*pi*x)*dt*(1+alpha/(r**2))/r**3
+    vy=vy-(4*pi*pi*y)*dt*(1+alpha/(r**2))/r**3
+    x=x+vx*dt
+    y=y+vy*dt
+    t=t+dt
+
+
+"""画轨迹"""
+plt.xlim(-0.5,0.5)
+plt.ylim(-0.5,0.5)
+plt.plot(x_list,y_list,"b")
+"""计算拟合直线"""   
+t_bar=sum(t_list)/len(t_list)  
+t_2_list=[a*b for a,b in zip(t_list,t_list)]
+t_2_bar=sum(t_2_list)/len(t_2_list)
+t_theta_list=[a*b for a,b in zip(t_list,theta_list)]
+t_theta_bar=sum(t_theta_list)/len(t_theta_list)
+theta_bar=sum(theta_list)/len(theta_list)
+k=(t_theta_bar-t_bar*theta_bar)/(t_2_bar-t_bar**2)
+b=(t_2_bar*theta_bar-t_bar*t_theta_bar)/(t_2_bar-t_bar**2)
+
+
+alpha_list.append(alpha)
+k_list.append(k)
+
+"""画散点及拟合曲线"""
+plt.figure(2)
+plt.scatter(t_list,theta_list,)
+plt.plot([0,3],[b,3*k+b])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+alpha_list=[]
+k_list=[]
+
+
+for alpha in (0.0035,0.0019,0.0009,0.0005,0.0002):
+    a=0.39
+    e=0.206
+    x=0.47
+    y=0
+    r=0
+    vx=0
+    vy=sqrt((4*pi*pi*(1-e))/(a*(1+e)))
+    x_list=[]
+    y_list=[]
+    t_list=[]
+    theta=0
+    theta_list=[]
+    r_list=[0,0]
+    t=0
+    dt=0.0001
+    while t<2.75:
+        x_list.append(x)
+        y_list.append(y)
+        r_list.append(r)
+        r=sqrt(x**2+y**2)
+        """选取远日点"""
+        if r_list[-2]>r_list[-3] and r_list[-2]>r_list[-1]:
+            theta=atan(y/x)
+            if x<0 and y>0:
+                theta=theta+pi
+            if x<0 and y<0:
+                theta=theta+pi
+            if x>0 and y<0:
+                theta=theta+2*pi
+            theta=theta*180/pi
+            theta_list.append(theta)
+            t_list.append(t)
+        
+        vx=vx-(4*pi*pi*x)*dt*(1+alpha/(r**2))/r**3
+        vy=vy-(4*pi*pi*y)*dt*(1+alpha/(r**2))/r**3
+        x=x+vx*dt
+        y=y+vy*dt
+        t=t+dt
+
+
+    """计算拟合直线"""   
+    t_bar=sum(t_list)/len(t_list)  
+    t_2_list=[a*b for a,b in zip(t_list,t_list)]
+    t_2_bar=sum(t_2_list)/len(t_2_list)
+    t_theta_list=[a*b for a,b in zip(t_list,theta_list)]
+    t_theta_bar=sum(t_theta_list)/len(t_theta_list)
+    theta_bar=sum(theta_list)/len(theta_list)
+    k=(t_theta_bar-t_bar*theta_bar)/(t_2_bar-t_bar**2)
+
+    alpha_list.append(alpha)
+    k_list.append(k)
+
+"""画散点及拟合曲线"""
+alpha_bar=sum(alpha_list)/len(alpha_list)  
+alpha_2_list=[a*b for a,b in zip(alpha_list,alpha_list)]
+alpha_2_bar=sum(alpha_2_list)/len(alpha_2_list)
+alpha_k_list=[a*b for a,b in zip(alpha_list,k_list)]
+alpha_k_bar=sum(alpha_k_list)/len(alpha_k_list)
+k_bar=sum(k_list)/len(k_list)
+s=(alpha_k_bar-alpha_bar*k_bar)/(alpha_2_bar-alpha_bar**2)
+f=(alpha_2_bar*k_bar-alpha_bar*alpha_k_bar)/(alpha_2_bar-alpha_bar**2)
+plt.figure(3)
+plt.scatter(alpha_list,k_list)
+plt.plot([0,0.004],[f,0.004*s+f])
+print(s)
+plt.legend()
+plt.show()
