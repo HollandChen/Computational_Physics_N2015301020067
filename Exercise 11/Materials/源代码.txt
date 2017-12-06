@@ -1,0 +1,78 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+
+"""initialize v"""
+vo=np.zeros((25,25))
+for i in np.arange(8,17):
+    for j in np.arange(8,17):
+        vo[i,j]=1.00
+
+
+vn=vo.copy()
+delta_v=0
+"""first update"""
+for i in np.arange(1,8):
+    for j in np.arange(1,24):
+        vn[i,j]=(vo[i-1,j]+vo[i+1,j]+vo[i,j-1]+vo[i,j+1])/4
+        delta_v=delta_v+abs(vo[i,j]-vn[i,j])
+for i in np.arange(8,17):
+    for j in np.hstack((np.arange(1,8),np.arange(17,24))):
+        vn[i,j]=(vo[i-1,j]+vo[i+1,j]+vo[i,j-1]+vo[i,j+1])/4
+        delta_v=delta_v+abs(vo[i,j]-vn[i,j])
+for i in np.arange(17,24):
+    for j in np.arange(1,24):
+        vn[i,j]=(vo[i-1,j]+vo[i+1,j]+vo[i,j-1]+vo[i,j+1])/4
+        delta_v=delta_v+abs(vo[i,j]-vn[i,j])
+vo=vn.copy()
+
+
+"""literation"""
+while delta_v>0.00025:
+    delta_v=0
+    for i in np.arange(1,8):
+        for j in np.arange(1,24):
+            vn[i,j]=(vo[i-1,j]+vo[i+1,j]+vo[i,j-1]+vo[i,j+1])/4
+            delta_v=delta_v+abs(vo[i,j]-vn[i,j])
+    for i in np.arange(8,17):
+        for j in np.hstack((np.arange(1,8),np.arange(17,24))):
+            vn[i,j]=(vo[i-1,j]+vo[i+1,j]+vo[i,j-1]+vo[i,j+1])/4
+            delta_v=delta_v+abs(vo[i,j]-vn[i,j])
+    for i in np.arange(17,24):
+        for j in np.arange(1,24):
+            vn[i,j]=(vo[i-1,j]+vo[i+1,j]+vo[i,j-1]+vo[i,j+1])/4
+            delta_v=delta_v+abs(vo[i,j]-vn[i,j])
+    vo=vn.copy()
+
+ex=np.zeros((25,25))
+ey=np.zeros((25,25))
+for i in np.arange(1,24):
+    for j in np.arange(1,24):
+        ex[i,j]=-(vo[i+1,j]-vo[i-1,j])/2
+        ey[i,j]=-(vo[i,j+1]-vo[i,j-1])/2
+
+
+def v(x,y):
+    return vo[x,y]
+x=np.arange(0,25)
+y=np.arange(0,25)
+X,Y=np.meshgrid(x,y)
+fig=plt.figure(figsize=(8,8),dpi=80)
+ax=Axes3D(fig)
+
+ax.plot_surface(X,Y,v(X,Y),rstride=1,cstride=1,cmap=plt.cm.hot)
+ax.set_zlim(0,1)
+plt.figure(figsize=(8,8),dpi=80)
+C = plt.contour(X, Y, v(X,Y), 8, colors='black', linewidth=.5)
+plt.clabel(C, inline=1, fontsize=10)
+plt.xticks([]), plt.yticks([])
+
+plt.figure(figsize=(8,8),dpi=80)
+Ex=ex[X,Y]
+Ey=ey[X,Y]
+plt.quiver(X,Y,Ex,Ey,edgecolor='k',facecolor='black',linewidth=.5)
+plt.xticks([])
+plt.yticks([])
+
+plt.show()
